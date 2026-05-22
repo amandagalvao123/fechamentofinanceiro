@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fechamento D-1 | 21/05/2026 | Bigg's 13</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f0f4f8;--surface: #ffffff;--surface-2: #f7f9fc;--border: #dfe4ed;--text: #1a2332;--text-muted: #6b7a8d;
+    --ragga: #2847b8;--ragga-light: #3558d4;--ragga-bg: rgba(40,71,184,0.06);--ragga-bg2: rgba(40,71,184,0.10);
+    --green: #16a34a;--green-bg: rgba(22,163,74,0.07);--red: #dc2626;--red-bg: rgba(220,38,38,0.06);
+    --amber: #d97706;--amber-bg: rgba(217,119,6,0.07);--purple: #7c3aed;--purple-bg: rgba(124,58,237,0.06);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.5;padding:20px}
+  .mono{font-family:'JetBrains Mono',monospace}
+  .container{max-width:1100px;margin:0 auto}
+  .header-banner{background:var(--ragga);border-radius:14px;padding:20px 28px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;position:relative;overflow:hidden}
+  .header-banner::before{content:'';position:absolute;top:-50%;right:-8%;width:420px;height:420px;background:radial-gradient(circle,rgba(255,255,255,0.06) 0%,transparent 70%);border-radius:50%}
+  .header-left{z-index:1}
+  .header-text h1{font-size:20px;font-weight:700;color:#fff;letter-spacing:-0.3px}
+  .header-text .subtitle{color:rgba(255,255,255,0.65);font-size:11px;margin-top:2px}
+  .date-badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:10px 16px;text-align:right;z-index:1}
+  .date-badge .day{font-size:28px;font-weight:700;color:#fff;line-height:1}
+  .date-badge .month{color:rgba(255,255,255,0.65);font-size:10px;letter-spacing:0.5px}
+
+  /* TABS */
+  .tab-bar{display:flex;gap:3px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:4px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+  .tab-btn{flex:1;padding:10px 12px;border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .25s ease;background:transparent;color:var(--text-muted);display:flex;align-items:center;justify-content:center;gap:6px}
+  .tab-btn:hover{background:var(--surface-2);color:var(--text)}
+  .tab-btn.active{background:var(--ragga);color:#fff;box-shadow:0 4px 12px rgba(40,71,184,0.3)}
+  .tab-btn .tab-icon{font-size:14px}
+  .tab-content{display:none}
+  .tab-content.active{display:block;animation:fadeIn .3s ease}
+
+  /* BIG NUMBERS */
+  .big-numbers{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+  .big-numbers.cols-3{grid-template-columns:repeat(3,1fr)}
+  .big-numbers.cols-5{grid-template-columns:repeat(5,1fr)}
+  .bn-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;position:relative;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+  .bn-card .bn-icon{font-size:16px;margin-bottom:4px}
+  .bn-card .bn-label{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:4px}
+  .bn-card .bn-value{font-size:18px;font-weight:700;line-height:1.1}
+  .bn-card .bn-sub{font-size:9px;color:var(--text-muted);margin-top:4px}
+  .bn-card .bn-stripe{position:absolute;top:0;left:0;right:0;height:3px}
+
+  /* SECTIONS */
+  .section{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+  .section-title{font-size:13px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;color:var(--ragga)}
+  .section-title .icon{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:12px}
+  .section-sep{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin:20px 0 10px;padding:8px 0;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:6px}
+  .section-sep .sep-icon{font-size:14px}
+
+  /* TABLE */
+  table{width:100%;border-collapse:collapse}
+  th{text-align:left;font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text-muted);padding:6px 10px;border-bottom:2px solid var(--border);background:var(--surface-2)}
+  td{padding:6px 10px;font-size:12px;border-bottom:1px solid #eef1f6}
+  tr:last-child td{border-bottom:none}
+  .text-right{text-align:right}.text-center{text-align:center}
+  .val-green{color:var(--green)}.val-red{color:var(--red)}.val-blue{color:var(--ragga)}.val-amber{color:var(--amber)}.val-purple{color:var(--purple)}
+  .badge{display:inline-block;padding:2px 8px;border-radius:5px;font-size:9px;font-weight:700;letter-spacing:.3px}
+  .badge-green{background:var(--green-bg);color:var(--green)}.badge-red{background:var(--red-bg);color:var(--red)}.badge-blue{background:var(--ragga-bg);color:var(--ragga)}.badge-amber{background:var(--amber-bg);color:var(--amber)}.badge-purple{background:var(--purple-bg);color:var(--purple)}
+  .summary-row{background:var(--surface-2);border-radius:8px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+  .summary-row.green{border-left:4px solid var(--green)}.summary-row.red{border-left:4px solid var(--red)}.summary-row.blue{border-left:4px solid var(--ragga)}
+  .summary-row .label{font-size:11px;color:var(--text-muted)}.summary-row .value{font-size:18px;font-weight:700}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+  .grid-4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px}
+  .kpi{background:var(--surface-2);border-radius:8px;padding:12px 14px;border:1px solid #eef1f6}
+  .kpi .kpi-label{font-size:9px;color:var(--text-muted);margin-bottom:4px;font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+  .kpi .kpi-value{font-size:16px;font-weight:700}
+  .kpi .kpi-sub{font-size:9px;color:var(--text-muted);margin-top:3px}
+  .divider{border:none;border-top:1px solid var(--border);margin:14px 0}
+  .alert{border-radius:8px;padding:10px 14px;font-size:11px;display:flex;gap:8px;align-items:flex-start;margin-top:10px;line-height:1.4}
+  .alert.warn{background:var(--amber-bg);border:1px solid rgba(217,119,6,.15)}
+  .alert.ok{background:var(--green-bg);border:1px solid rgba(22,163,74,.15)}
+  .alert.info{background:var(--ragga-bg);border:1px solid rgba(40,71,184,.12)}
+  .alert .alert-icon{font-size:13px;flex-shrink:0;margin-top:1px}
+  .stamp{display:flex;align-items:center;justify-content:center;gap:8px;font-size:10px;color:var(--text-muted);margin-top:20px;padding-top:14px;border-top:1px solid var(--border)}
+
+  /* DRE */
+  .dre-table{width:100%;border-collapse:collapse}
+  .dre-table th{text-align:left;font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);padding:5px 8px;border-bottom:2px solid var(--border);background:var(--surface-2)}
+  .dre-table td{padding:4px 8px;font-size:11px;border-bottom:1px solid #eef1f6}
+  .dre-table tr:last-child td{border-bottom:none}
+  .dre-row-total td{background:var(--surface-2)!important;font-weight:700;font-size:11px;border-top:1px solid var(--border)!important;border-bottom:1px solid var(--border)!important}
+  .dre-row-grand td{background:var(--ragga-bg)!important;font-weight:700;font-size:12px;border-top:2px solid var(--ragga)!important;color:var(--ragga)}
+  .dre-row-sub td{padding-left:20px;color:var(--text-muted);font-size:10px}
+  .dre-pct{font-size:9px;color:var(--text-muted);font-weight:500}
+
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- HEADER -->
+<div class="header-banner">
+  <div class="header-left">
+    <div class="header-text">
+      <h1>Fechamento D-1 — Bigg's 13</h1>
+      <div class="subtitle">21/05/2026 (Quarta-feira) · Emissão 22/05</div>
+    </div>
+  </div>
+  <div class="date-badge">
+    <div class="day">21</div>
+    <div class="month">MAI 2026</div>
+  </div>
+</div>
+
+<!-- TAB BAR -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('financeiro')"><span class="tab-icon">💰</span> Financeiro</button>
+  <button class="tab-btn" onclick="switchTab('print')"><span class="tab-icon">📸</span> Print Financeiro</button>
+  <button class="tab-btn" onclick="switchTab('operacional')"><span class="tab-icon">🔍</span> Caixa & Auditoria</button>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!--         ABA 1 — FINANCEIRO (interativo)    -->
+<!-- ══════════════════════════════════════════ -->
+<div class="tab-content active" id="tab-financeiro">
+
+<div class="big-numbers">
+  <div class="bn-card"><div class="bn-stripe" style="background:var(--green)"></div><div class="bn-icon">📊</div><div class="bn-label">Faturamento Bruto</div><div class="bn-value val-green mono">R$ 22.555,74</div><div class="bn-sub">Líq. s/ taxas: R$ 22.289,34</div></div>
+  <div class="bn-card"><div class="bn-stripe" style="background:var(--red)"></div><div class="bn-icon">💳</div><div class="bn-label">Contas Pagas</div><div class="bn-value val-red mono">R$ 1.604,90</div><div class="bn-sub">4 boletos · 79% CMV</div></div>
+  <div class="bn-card"><div class="bn-stripe" style="background:var(--ragga)"></div><div class="bn-icon">🏦</div><div class="bn-label">Saldo Inicial (21/05)</div><div class="bn-value val-blue mono">R$ 5.656,81</div><div class="bn-sub">Abertura banco</div></div>
+  <div class="bn-card"><div class="bn-stripe" style="background:var(--purple)"></div><div class="bn-icon">🏦</div><div class="bn-label">Saldo Final (21/05)</div><div class="bn-value val-green mono">R$ 18.029,20</div><div class="bn-sub">Fechamento banco</div></div>
+</div>
+<div class="big-numbers cols-3">
+  <div class="bn-card"><div class="bn-stripe" style="background:var(--green)"></div><div class="bn-icon">📥</div><div class="bn-label">(+) Entradas</div><div class="bn-value val-green mono">R$ 14.030,84</div><div class="bn-sub">Créditos extrato 21/05</div></div>
+  <div class="bn-card"><div class="bn-stripe" style="background:var(--red)"></div><div class="bn-icon">📤</div><div class="bn-label">(−) Saídas</div><div class="bn-value val-red mono">R$ 1.604,90</div><div class="bn-sub">Contas pagas 21/05</div></div>
+  <div class="bn-card"><div class="bn-stripe" style="background:linear-gradient(90deg,var(--ragga),var(--green))"></div><div class="bn-icon">💎</div><div class="bn-label">(=) Variação</div><div class="bn-value val-green mono">R$ 12.425,94</div><div class="bn-sub">Entradas − Saídas</div></div>
+</div>
+
+
+<div class="section-sep"><span class="sep-icon">📊</span> FATURAMENTO POR FORMA DE PAGAMENTO</div>
+<div class="section">
+  <div class="grid-3" style="margin-bottom:14px;">
+    <div class="kpi"><div class="kpi-label">Fat. Bruto Total</div><div class="kpi-value val-green mono">R$ 22.555,74</div></div>
+    <div class="kpi"><div class="kpi-label">Vendas Válidas (s/ Colab.)</div><div class="kpi-value mono">R$ 20.326,85</div></div>
+    <div class="kpi"><div class="kpi-label">Consumo Colaborador</div><div class="kpi-value mono val-amber">R$ 2.228,89</div></div>
+  </div>
+  <table>
+    <tr><th>Forma Pgto</th><th class="text-right">Bruto</th><th class="text-right">%</th><th>Liq.</th><th class="text-right">Taxa</th><th class="text-right">Líquido</th></tr>
+    <tr><td>Débito</td><td class="text-right mono">R$ 8.296,99</td><td class="text-right mono">36,8%</td><td><span class="badge badge-green">D+1</span></td><td class="text-right mono">0,99%</td><td class="text-right mono val-green">R$ 8.214,85</td></tr>
+    <tr><td>Crédito</td><td class="text-right mono">R$ 6.824,41</td><td class="text-right mono">30,3%</td><td><span class="badge badge-green">D+1</span></td><td class="text-right mono">2,70%</td><td class="text-right mono val-green">R$ 6.640,15</td></tr>
+    <tr><td>PIX</td><td class="text-right mono">R$ 2.309,74</td><td class="text-right mono">10,2%</td><td><span class="badge badge-green">D+0</span></td><td class="text-right mono">0,00%</td><td class="text-right mono val-green">R$ 2.309,74</td></tr>
+    <tr><td>Dinheiro</td><td class="text-right mono">R$ 1.784,98</td><td class="text-right mono">7,9%</td><td><span class="badge badge-amber">Sem.</span></td><td class="text-right mono">0,00%</td><td class="text-right mono">R$ 1.784,98</td></tr>
+    <tr><td>Voucher</td><td class="text-right mono">R$ 629,75</td><td class="text-right mono">2,8%</td><td><span class="badge badge-purple">D+30</span></td><td class="text-right mono">—</td><td class="text-right mono val-purple">R$ 629,75</td></tr>
+    <tr><td>Pgto Online</td><td class="text-right mono">R$ 480,98</td><td class="text-right mono">2,1%</td><td><span class="badge badge-purple">D+30</span></td><td class="text-right mono">—</td><td class="text-right mono val-purple">R$ 480,98</td></tr>
+    <tr><td>Colab. a Prazo</td><td class="text-right mono">R$ 2.228,89</td><td class="text-right mono">9,9%</td><td><span class="badge badge-amber">Folha</span></td><td class="text-right mono">—</td><td class="text-right mono" style="color:var(--text-muted)">R$ 2.228,89</td></tr>
+  </table>
+  <hr class="divider">
+  <div class="grid-3">
+    <div class="kpi"><div class="kpi-label">Total Taxas (Déb+Créd)</div><div class="kpi-value val-red mono">R$ 266,40</div><div class="kpi-sub">Déb: R$ 82,14 | Créd: R$ 184,26</div></div>
+    <div class="kpi"><div class="kpi-label">Fat. Bruto Total</div><div class="kpi-value mono">R$ 22.555,74</div></div>
+    <div class="kpi"><div class="kpi-label">Fat. Líquido (s/ taxas)</div><div class="kpi-value val-green mono">R$ 22.289,34</div></div>
+  </div>
+</div>
+
+<div class="section-sep"><span class="sep-icon">💳</span> CONTAS A PAGAR (21/05)</div>
+<div class="section">
+  <table>
+    <tr><th>Classificação</th><th class="text-right">Valor Pago</th><th class="text-right">%</th></tr>
+    <tr><td><span class="badge badge-red">CMV</span></td><td class="text-right mono val-red">R$ 1.267,40</td><td class="text-right mono">79,0%</td></tr>
+    <tr><td><span class="badge badge-amber">OPEX</span></td><td class="text-right mono val-amber">R$ 337,50</td><td class="text-right mono">21,0%</td></tr>
+  </table>
+  <div class="summary-row red"><div><span class="label">Total Pago — 4 boletos</span></div><div class="mono value val-red">R$ 1.604,90</div></div>
+</div>
+
+<div class="section-sep"><span class="sep-icon">🏦</span> CONCILIAÇÃO BANCÁRIA — EXTRATO 21/05</div>
+<div class="section">
+  <div class="alert info" style="margin-top:0;margin-bottom:12px;"><div class="alert-icon">📐</div><div><strong>Lógica:</strong> Déb/Créd D+1 → ref. fat. <strong>20/05</strong>. PIX D+0 → fat. <strong>21/05</strong>.</div></div>
+  <table>
+    <tr><th>Forma</th><th class="text-right">Ref.</th><th class="text-right">Bruto</th><th class="text-right">Taxa</th><th class="text-right">Esperado</th><th class="text-right">Extrato</th><th class="text-right">Dif.</th></tr>
+    <tr><td>Crédito</td><td class="text-right"><span class="badge badge-blue">20/05</span></td><td class="text-right mono">6.207,62</td><td class="text-right mono">2,70%</td><td class="text-right mono">6.040,01</td><td class="text-right mono val-green">5.955,91</td><td class="text-right mono val-red">−84,10</td></tr>
+    <tr><td>Débito</td><td class="text-right"><span class="badge badge-blue">20/05</span></td><td class="text-right mono">6.185,46</td><td class="text-right mono">0,99%</td><td class="text-right mono">6.124,22</td><td class="text-right mono val-green">5.759,69</td><td class="text-right mono val-red">−364,53</td></tr>
+    <tr><td>PIX</td><td class="text-right"><span class="badge badge-green">21/05</span></td><td class="text-right mono">2.309,74</td><td class="text-right mono">0,00%</td><td class="text-right mono">2.309,74</td><td class="text-right mono val-green">2.315,24</td><td class="text-right mono val-green">+5,50</td></tr>
+  </table>
+  <div class="grid-3" style="margin-top:12px;">
+    <div class="kpi"><div class="kpi-label">Esperado</div><div class="kpi-value mono">R$ 14.473,97</div></div>
+    <div class="kpi"><div class="kpi-label">Recebido</div><div class="kpi-value mono val-green">R$ 14.030,84</div></div>
+    <div class="kpi"><div class="kpi-label">Diferença</div><div class="kpi-value mono val-red">−R$ 443,13</div></div>
+  </div>
+  <div class="alert warn"><div class="alert-icon">⚠️</div><div>PIX bateu (+R$ 5,50). Débito −R$ 364,53 e crédito −R$ 84,10.</div></div>
+  <hr class="divider">
+  <div style="font-size:12px;font-weight:700;color:var(--ragga);margin-bottom:10px;">🔍 Prova de Caixa (21/05)</div>
+  <table>
+    <tr><th>Item</th><th class="text-right">Valor</th></tr>
+    <tr><td>Saldo Inicial</td><td class="text-right mono">R$ 5.656,81</td></tr>
+    <tr><td style="color:var(--green)">(+) Crédito</td><td class="text-right mono val-green">R$ 5.955,91</td></tr>
+    <tr><td style="color:var(--green)">(+) Débito</td><td class="text-right mono val-green">R$ 5.759,69</td></tr>
+    <tr><td style="color:var(--green)">(+) PIX</td><td class="text-right mono val-green">R$ 2.315,24</td></tr>
+    <tr><td style="color:var(--red)">(−) Contas Pagas</td><td class="text-right mono val-red">R$ 1.604,90</td></tr>
+    <tr><td style="color:var(--red)">(−) Outros Débitos</td><td class="text-right mono val-red">R$ 53,55</td></tr>
+    <tr style="background:var(--surface-2)"><td><strong>= Saldo Calculado</strong></td><td class="text-right mono" style="font-weight:700">R$ 18.029,20</td></tr>
+    <tr style="background:var(--surface-2)"><td><strong>Saldo Extrato</strong></td><td class="text-right mono val-green" style="font-weight:700">R$ 18.029,20</td></tr>
+  </table>
+  <div class="summary-row green"><div><span class="label">Prova de Caixa 21/05</span></div><div class="mono value val-green">✓ BATEU</div></div>
+</div>
+
+<div class="section-sep"><span class="sep-icon">🏦</span> CONCILIAÇÃO BANCÁRIA — EXTRATO 22/05</div>
+<div class="section">
+  <div class="alert info" style="margin-top:0;margin-bottom:12px;"><div class="alert-icon">📐</div><div><strong>Lógica:</strong> Déb/Créd D+1 → ref. fat. <strong>21/05</strong>. PIX R$ 255,73 = <strong>avulso</strong>.</div></div>
+  <table>
+    <tr><th>Forma</th><th class="text-right">Ref.</th><th class="text-right">Bruto</th><th class="text-right">Taxa</th><th class="text-right">Esperado</th><th class="text-right">Extrato</th><th class="text-right">Dif.</th></tr>
+    <tr><td>Crédito</td><td class="text-right"><span class="badge badge-blue">21/05</span></td><td class="text-right mono">6.824,41</td><td class="text-right mono">2,70%</td><td class="text-right mono">6.640,15</td><td class="text-right mono val-green">6.596,45</td><td class="text-right mono val-red">−43,70</td></tr>
+    <tr><td>Débito</td><td class="text-right"><span class="badge badge-blue">21/05</span></td><td class="text-right mono">8.296,99</td><td class="text-right mono">0,99%</td><td class="text-right mono">8.214,85</td><td class="text-right mono val-green">8.333,60</td><td class="text-right mono val-green">+118,75</td></tr>
+    <tr><td>PIX avulso</td><td class="text-right"><span class="badge badge-amber">Avulso</span></td><td class="text-right mono" style="color:var(--text-muted)">n/a</td><td class="text-right mono">—</td><td class="text-right mono" style="color:var(--text-muted)">—</td><td class="text-right mono">255,73</td><td class="text-right mono" style="color:var(--text-muted)">n/a</td></tr>
+  </table>
+  <div class="grid-4" style="margin-top:12px;">
+    <div class="kpi"><div class="kpi-label">Esperado</div><div class="kpi-value mono">R$ 14.855,00</div></div>
+    <div class="kpi"><div class="kpi-label">Recebido</div><div class="kpi-value mono val-green">R$ 14.930,05</div></div>
+    <div class="kpi"><div class="kpi-label">Dif. Cartões</div><div class="kpi-value mono val-green">+R$ 75,05</div></div>
+    <div class="kpi"><div class="kpi-label">PIX Avulso</div><div class="kpi-value mono">R$ 255,73</div></div>
+  </div>
+  <div class="alert ok"><div class="alert-icon">✅</div><div><strong>Cartões 22/05 favorável +R$ 75,05.</strong></div></div>
+  <hr class="divider">
+  <div style="font-size:12px;font-weight:700;color:var(--ragga);margin-bottom:10px;">🔍 Prova de Caixa (22/05)</div>
+  <table>
+    <tr><th>Item</th><th class="text-right">Valor</th></tr>
+    <tr><td>Saldo Inicial</td><td class="text-right mono">R$ 18.051,45</td></tr>
+    <tr><td style="color:var(--green)">(+) Crédito</td><td class="text-right mono val-green">R$ 6.596,45</td></tr>
+    <tr><td style="color:var(--green)">(+) Débito</td><td class="text-right mono val-green">R$ 8.333,60</td></tr>
+    <tr><td style="color:var(--green)">(+) PIX Avulso</td><td class="text-right mono val-green">R$ 255,73</td></tr>
+    <tr><td style="color:var(--red)">(−) Contas Pagas</td><td class="text-right mono val-red">R$ 3.045,55</td></tr>
+    <tr><td style="color:var(--red)">(−) Outros Débitos</td><td class="text-right mono val-red">R$ 22,25</td></tr>
+    <tr style="background:var(--surface-2)"><td><strong>= Saldo Calculado</strong></td><td class="text-right mono" style="font-weight:700">R$ 30.169,43</td></tr>
+    <tr style="background:var(--surface-2)"><td><strong>Saldo Extrato</strong></td><td class="text-right mono val-green" style="font-weight:700">R$ 30.169,43</td></tr>
+  </table>
+  <div class="summary-row green"><div><span class="label">Prova de Caixa 22/05</span></div><div class="mono value val-green">✓ BATEU</div></div>
+  <div class="alert info" style="margin-top:10px;"><div class="alert-icon">📝</div><div><strong>Gap:</strong> Saldo final 21/05 R$ 18.029,20 vs abertura 22/05 R$ 18.051,45 → +R$ 22,25.</div></div>
+</div>
+
+<div class="section-sep"><span class="sep-icon">📈</span> DRE DIÁRIA — 21/05/2026</div>
+<div class="section" style="border:2px solid var(--ragga);background:linear-gradient(135deg,#fff 0%,rgba(40,71,184,0.02) 100%);">
+  <table class="dre-table">
+    <thead><tr><th style="width:55%">Conta</th><th class="text-right" style="width:25%">Valor (R$)</th><th class="text-right" style="width:20%">%RB</th></tr></thead>
+    <tbody>
+      <tr class="dre-row-total" style="cursor:pointer" onclick="toggleDreGroup('grp-rb')"><td><strong>▸ RECEITA BRUTA TOTAL</strong></td><td class="text-right mono"><strong>22.555,74</strong></td><td class="text-right dre-pct" style="font-weight:700">100,0%</td></tr>
+      <tr class="dre-detail grp-rb" style="display:none"><td class="dre-row-sub" style="padding-left:20px;color:var(--text-muted)">Débito</td><td class="text-right mono" style="color:var(--text-muted)">8.296,99</td><td class="text-right dre-pct">36,8%</td></tr>
+      <tr class="dre-detail grp-rb" style="display:none"><td class="dre-row-sub" style="padding-left:20px;color:var(--text-muted)">Crédito</td><td class="text-right mono" style="color:var(--text-muted)">6.824,41</td><td class="text-right dre-pct">30,3%</td></tr>
+      <tr class="dre-detail grp-rb" style="display:none"><td class="dre-row-sub" style="padding-left:20px;color:var(--text-muted)">PIX</td><td class="text-right mono" style="color:var(--text-muted)">2.309,74</td><td class="text-right dre-pct">10,2%</td></tr>
+      <tr class="dre-detail grp-rb" style="display:none"><td class="dre-row-sub" style="padding-left:20px;color:var(--text-muted)">Dinheiro</td><td class="text-right mono" style="color:var(--text-muted)">1.784,98</td><td class="text-right dre-pct">7,9%</td></tr>
+      <tr class="dre-detail grp-rb" style="display:none"><td class="dre-row-sub" style="padding-left:20px;color:var(--text-muted)">Voucher</td><td class="text-right mono" style="color:var(--text-muted)">629,75</td><td class="text-right dre-pct">2,8%</td></tr>
+      <tr class="dre-detail grp-rb" style="display:none"><td class="dre-row-sub" style="padding-left:20px;color:var(--text-muted)">Pgto Online</td><td class="text-right mono" style="color:var(--text-muted)">480,98</td><td class="text-right dre-pct">2,1%</td></tr>
+      <tr class="dre-detail grp-rb" style="display:none"><td class="dre-row-sub" style="padding-left:20px;color:var(--text-muted)">Colab. a Prazo</td><td class="text-right mono" style="color:var(--text-muted)">2.228,89</td><td class="text-right dre-pct">9,9%</td></tr>
+      <tr class="dre-row-total" style="cursor:pointer" onclick="toggleDreGroup('grp-ded')"><td><strong>▸ (-) TOTAL DEDUÇÕES</strong></td><td class="text-right mono val-red"><strong>(627,41)</strong></td><td class="text-right dre-pct" style="font-weight:700">2,8%</td></tr>
+      <tr class="dre-detail grp-ded" style="display:none"><td style="padding-left:20px;color:var(--text-muted)">Cancelamentos (23 ped.)</td><td class="text-right mono val-red">(361,01)</td><td class="text-right dre-pct">1,6%</td></tr>
+      <tr class="dre-detail grp-ded" style="display:none"><td style="padding-left:20px;color:var(--text-muted)">Taxa Déb. (0,99%)</td><td class="text-right mono val-red">(82,14)</td><td class="text-right dre-pct">0,4%</td></tr>
+      <tr class="dre-detail grp-ded" style="display:none"><td style="padding-left:20px;color:var(--text-muted)">Taxa Créd. (2,70%)</td><td class="text-right mono val-red">(184,26)</td><td class="text-right dre-pct">0,8%</td></tr>
+      <tr class="dre-row-grand"><td><strong>(=) RECEITA LÍQUIDA</strong></td><td class="text-right mono val-green"><strong>21.928,33</strong></td><td class="text-right dre-pct" style="font-weight:700;color:var(--green)">97,2%</td></tr>
+      <tr class="dre-row-total" style="cursor:pointer" onclick="toggleDreGroup('grp-cmv')"><td><strong>▸ (-) TOTAL CMV</strong></td><td class="text-right mono val-red"><strong>(1.564,26)</strong></td><td class="text-right dre-pct" style="font-weight:700">6,9%</td></tr>
+      <tr class="dre-detail grp-cmv" style="display:none"><td style="padding-left:20px;color:var(--text-muted)">CMV — Boletos pagos</td><td class="text-right mono val-red">(1.267,40)</td><td class="text-right dre-pct">5,6%</td></tr>
+      <tr class="dre-detail grp-cmv" style="display:none"><td style="padding-left:20px;color:var(--text-muted)">Brindes (cortesia)</td><td class="text-right mono val-red">(296,86)</td><td class="text-right dre-pct">1,3%</td></tr>
+      <tr class="dre-row-grand"><td><strong>(=) LUCRO BRUTO</strong></td><td class="text-right mono val-green"><strong>20.364,07</strong></td><td class="text-right dre-pct" style="font-weight:700;color:var(--green)">90,3%</td></tr>
+      <tr class="dre-row-total" style="cursor:pointer" onclick="toggleDreGroup('grp-opex')"><td><strong>▸ (-) TOTAL DESP. OPERAC.</strong></td><td class="text-right mono val-red"><strong>(932,50)</strong></td><td class="text-right dre-pct" style="font-weight:700">4,1%</td></tr>
+      <tr class="dre-detail grp-opex" style="display:none"><td style="padding-left:20px;color:var(--text-muted)">OPEX — Boletos</td><td class="text-right mono val-red">(337,50)</td><td class="text-right dre-pct">1,5%</td></tr>
+      <tr class="dre-detail grp-opex" style="display:none"><td style="padding-left:20px;color:var(--text-muted)">CMO — Free / Segurança</td><td class="text-right mono val-red">(575,00)</td><td class="text-right dre-pct">2,6%</td></tr>
+      <tr class="dre-detail grp-opex" style="display:none"><td style="padding-left:20px;color:var(--text-muted)">Estorno Cliente</td><td class="text-right mono val-red">(20,00)</td><td class="text-right dre-pct">0,1%</td></tr>
+      <tr class="dre-row-grand" style="background:var(--green-bg)!important;border-top:2px solid var(--green)!important;"><td><strong>(=) RESULTADO OPERACIONAL</strong></td><td class="text-right mono val-green" style="font-size:13px"><strong>19.431,57</strong></td><td class="text-right dre-pct" style="font-weight:700;color:var(--green);font-size:11px">86,1%</td></tr>
+    </tbody>
+  </table>
+  <div class="alert info" style="margin-top:8px;font-size:10px;padding:8px 12px;"><div class="alert-icon" style="font-size:12px">📝</div><div><strong>Nota:</strong> DRE parcial. Não inclui rateios de folha, aluguel, energia, depreciação.</div></div>
+</div>
+
+</div><!-- /tab-financeiro -->
+
+
+<!-- ══════════════════════════════════════════ -->
+<!--      ABA 2 — PRINT FINANCEIRO (tudo aberto) -->
+<!-- ══════════════════════════════════════════ -->
+<div class="tab-content" id="tab-print">
+
+<div class="big-numbers">
+  <div class="bn-card"><div class="bn-stripe" style="background:var(--green)"></div><div class="bn-label">Faturamento Bruto</div><div class="bn-value val-green mono">R$ 22.555,74</div><div class="bn-sub">Líq: R$ 22.289,34</div></div>
+  <div class="bn-card"><div class="bn-stripe" style="background:var(--red)"></div><div class="bn-label">Contas Pagas</div><div class="bn-value val-red mono">R$ 1.604,90</div><div class="bn-sub">4 bol. · 79% CMV</div></div>
+  <div class="bn-card"><div class="bn-stripe" style="background:var(--ragga)"></div><div class="bn-label">Saldo Inicial (21/05)</div><div class="bn-value val-blue mono">R$ 5.656,81</div><div class="bn-sub">Abertura banco</div></div>
+  <div class="bn-card"><div class="bn-stripe" style="background:var(--purple)"></div><div class="bn-label">Saldo Final (21/05)</div><div class="bn-value val-green mono">R$ 18.029,20</div><div class="bn-sub">Fechamento banco</div></div>
+</div>
+<div class="big-numbers cols-3" style="margin-bottom:16px;">
+  <div class="bn-card"><div class="bn-stripe" style="background:var(--green)"></div><div class="bn-label">(+) Entradas</div><div class="bn-value val-green mono">R$ 14.030,84</div><div class="bn-sub">Créditos ext. 21/05</div></div>
+  <div class="bn-card"><div class="bn-stripe" style="background:var(--red)"></div><div class="bn-label">(−) Saídas</div><div class="bn-value val-red mono">R$ 1.604,90</div><div class="bn-sub">Contas pagas 21/05</div></div>
+  <div class="bn-card"><div class="bn-stripe" style="background:linear-gradient(90deg,var(--ragga),var(--green))"></div><div class="bn-label">(=) Variação</div><div class="bn-value val-green mono">R$ 12.425,94</div><div class="bn-sub">Entradas − Saídas</div></div>
+</div>
+
+<!-- FATURAMENTO COMPACTO -->
+<div class="section-sep"><span class="sep-icon">📊</span> FATURAMENTO</div>
+<div class="section">
+  <table>
+    <tr><th>Forma Pgto</th><th class="text-right">Bruto</th><th class="text-right">%</th><th>Liq.</th><th class="text-right">Taxa</th><th class="text-right">Líquido</th></tr>
+    <tr><td>Débito</td><td class="text-right mono">8.296,99</td><td class="text-right mono">36,8%</td><td><span class="badge badge-green">D+1</span></td><td class="text-right mono">0,99%</td><td class="text-right mono val-green">8.214,85</td></tr>
+    <tr><td>Crédito</td><td class="text-right mono">6.824,41</td><td class="text-right mono">30,3%</td><td><span class="badge badge-green">D+1</span></td><td class="text-right mono">2,70%</td><td class="text-right mono val-green">6.640,15</td></tr>
+    <tr><td>PIX</td><td class="text-right mono">2.309,74</td><td class="text-right mono">10,2%</td><td><span class="badge badge-green">D+0</span></td><td class="text-right mono">—</td><td class="text-right mono">2.309,74</td></tr>
+    <tr><td>Dinheiro</td><td class="text-right mono">1.784,98</td><td class="text-right mono">7,9%</td><td><span class="badge badge-amber">Sem.</span></td><td class="text-right mono">—</td><td class="text-right mono">1.784,98</td></tr>
+    <tr><td>Voucher</td><td class="text-right mono">629,75</td><td class="text-right mono">2,8%</td><td><span class="badge badge-purple">D+30</span></td><td class="text-right mono">—</td><td class="text-right mono">629,75</td></tr>
+    <tr><td>Pgto Online</td><td class="text-right mono">480,98</td><td class="text-right mono">2,1%</td><td><span class="badge badge-purple">D+30</span></td><td class="text-right mono">—</td><td class="text-right mono">480,98</td></tr>
+    <tr><td>Colab. Prazo</td><td class="text-right mono">2.228,89</td><td class="text-right mono">9,9%</td><td><span class="badge badge-amber">Folha</span></td><td class="text-right mono">—</td><td class="text-right mono" style="color:var(--text-muted)">2.228,89</td></tr>
+  </table>
+  <div class="summary-row green"><div><span class="label">Taxas: R$ 266,40 (Déb R$ 82,14 + Créd R$ 184,26)</span></div><div style="text-align:right"><div class="mono" style="font-size:12px;color:var(--text-muted)">Bruto R$ 22.555,74</div><div class="mono value val-green">Líq. R$ 22.289,34</div></div></div>
+</div>
+
+<!-- CONTAS PAGAS COMPACTO -->
+<div class="section-sep"><span class="sep-icon">💳</span> CONTAS PAGAS</div>
+<div class="section">
+  <table>
+    <tr><th>Class.</th><th class="text-right">Valor</th><th class="text-right">%</th></tr>
+    <tr><td><span class="badge badge-red">CMV</span></td><td class="text-right mono val-red">1.267,40</td><td class="text-right mono">79%</td></tr>
+    <tr><td><span class="badge badge-amber">OPEX</span></td><td class="text-right mono val-amber">337,50</td><td class="text-right mono">21%</td></tr>
+  </table>
+  <div class="summary-row red"><div><span class="label">Total — 4 boletos</span></div><div class="mono value val-red">R$ 1.604,90</div></div>
+</div>
+
+<!-- CONCILIAÇÃO 21/05 COMPACTA -->
+<div class="section-sep"><span class="sep-icon">🏦</span> CONCILIAÇÃO 21/05 (Déb/Créd ref. fat. 20/05 · PIX ref. 21/05)</div>
+<div class="section">
+  <table>
+    <tr><th>Forma</th><th class="text-right">Esperado</th><th class="text-right">Extrato</th><th class="text-right">Dif.</th></tr>
+    <tr><td>Crédito (20/05)</td><td class="text-right mono">6.040,01</td><td class="text-right mono">5.955,91</td><td class="text-right mono val-red">−84,10</td></tr>
+    <tr><td>Débito (20/05)</td><td class="text-right mono">6.124,22</td><td class="text-right mono">5.759,69</td><td class="text-right mono val-red">−364,53</td></tr>
+    <tr><td>PIX (21/05)</td><td class="text-right mono">2.309,74</td><td class="text-right mono">2.315,24</td><td class="text-right mono val-green">+5,50</td></tr>
+  </table>
+  <div class="grid-2" style="margin-top:10px;">
+    <div class="summary-row red"><div><span class="label">Diferença</span></div><div class="mono value val-red">−R$ 443,13</div></div>
+    <div class="summary-row green"><div><span class="label">Prova Caixa</span></div><div class="mono value val-green">✓ R$ 18.029,20</div></div>
+  </div>
+</div>
+
+<!-- CONCILIAÇÃO 22/05 COMPACTA -->
+<div class="section-sep"><span class="sep-icon">🏦</span> CONCILIAÇÃO 22/05 (Déb/Créd ref. fat. 21/05)</div>
+<div class="section">
+  <table>
+    <tr><th>Forma</th><th class="text-right">Esperado</th><th class="text-right">Extrato</th><th class="text-right">Dif.</th></tr>
+    <tr><td>Crédito (21/05)</td><td class="text-right mono">6.640,15</td><td class="text-right mono">6.596,45</td><td class="text-right mono val-red">−43,70</td></tr>
+    <tr><td>Débito (21/05)</td><td class="text-right mono">8.214,85</td><td class="text-right mono">8.333,60</td><td class="text-right mono val-green">+118,75</td></tr>
+    <tr><td>PIX avulso</td><td class="text-right mono" style="color:var(--text-muted)">—</td><td class="text-right mono">255,73</td><td class="text-right mono" style="color:var(--text-muted)">n/a</td></tr>
+  </table>
+  <div class="grid-2" style="margin-top:10px;">
+    <div class="summary-row green"><div><span class="label">Dif. Cartões</span></div><div class="mono value val-green">+R$ 75,05</div></div>
+    <div class="summary-row green"><div><span class="label">Prova Caixa</span></div><div class="mono value val-green">✓ R$ 30.169,43</div></div>
+  </div>
+</div>
+
+<!-- DRE COMPACTA — TUDO ABERTO -->
+<div class="section-sep"><span class="sep-icon">📈</span> DRE DIÁRIA</div>
+<div class="section" style="border:2px solid var(--ragga);">
+  <table class="dre-table">
+    <thead><tr><th style="width:55%">Conta</th><th class="text-right" style="width:25%">R$</th><th class="text-right" style="width:20%">%RB</th></tr></thead>
+    <tbody>
+      <tr class="dre-row-total"><td><strong>RECEITA BRUTA</strong></td><td class="text-right mono"><strong>22.555,74</strong></td><td class="text-right dre-pct" style="font-weight:700">100,0%</td></tr>
+      <tr><td style="padding-left:20px;color:var(--text-muted);font-size:10px">Débito</td><td class="text-right mono" style="color:var(--text-muted);font-size:10px">8.296,99</td><td class="text-right dre-pct">36,8%</td></tr>
+      <tr><td style="padding-left:20px;color:var(--text-muted);font-size:10px">Crédito</td><td class="text-right mono" style="color:var(--text-muted);font-size:10px">6.824,41</td><td class="text-right dre-pct">30,3%</td></tr>
+      <tr><td style="padding-left:20px;color:var(--text-muted);font-size:10px">PIX</td><td class="text-right mono" style="color:var(--text-muted);font-size:10px">2.309,74</td><td class="text-right dre-pct">10,2%</td></tr>
+      <tr><td style="padding-left:20px;color:var(--text-muted);font-size:10px">Dinheiro / Voucher / Online / Colab.</td><td class="text-right mono" style="color:var(--text-muted);font-size:10px">5.124,60</td><td class="text-right dre-pct">22,7%</td></tr>
+      <tr class="dre-row-total"><td><strong>(-) DEDUÇÕES</strong></td><td class="text-right mono val-red"><strong>(627,41)</strong></td><td class="text-right dre-pct" style="font-weight:700">2,8%</td></tr>
+      <tr><td style="padding-left:20px;color:var(--text-muted);font-size:10px">Cancelamentos (23 ped.)</td><td class="text-right mono val-red" style="font-size:10px">(361,01)</td><td class="text-right dre-pct">1,6%</td></tr>
+      <tr><td style="padding-left:20px;color:var(--text-muted);font-size:10px">Taxa Déb (0,99%) + Créd (2,70%)</td><td class="text-right mono val-red" style="font-size:10px">(266,40)</td><td class="text-right dre-pct">1,2%</td></tr>
+      <tr class="dre-row-grand"><td><strong>(=) RECEITA LÍQUIDA</strong></td><td class="text-right mono val-green"><strong>21.928,33</strong></td><td class="text-right dre-pct" style="font-weight:700;color:var(--green)">97,2%</td></tr>
+      <tr class="dre-row-total"><td><strong>(-) CMV</strong></td><td class="text-right mono val-red"><strong>(1.564,26)</strong></td><td class="text-right dre-pct" style="font-weight:700">6,9%</td></tr>
+      <tr><td style="padding-left:20px;color:var(--text-muted);font-size:10px">Boletos CMV + Brindes</td><td class="text-right mono val-red" style="font-size:10px">(1.267,40 + 296,86)</td><td class="text-right dre-pct">5,6%+1,3%</td></tr>
+      <tr class="dre-row-grand"><td><strong>(=) LUCRO BRUTO</strong></td><td class="text-right mono val-green"><strong>20.364,07</strong></td><td class="text-right dre-pct" style="font-weight:700;color:var(--green)">90,3%</td></tr>
+      <tr class="dre-row-total"><td><strong>(-) DESP. OPERAC.</strong></td><td class="text-right mono val-red"><strong>(932,50)</strong></td><td class="text-right dre-pct" style="font-weight:700">4,1%</td></tr>
+      <tr><td style="padding-left:20px;color:var(--text-muted);font-size:10px">OPEX bol. + CMO free/seg. + Estorno</td><td class="text-right mono val-red" style="font-size:10px">(337,50+575,00+20,00)</td><td class="text-right dre-pct">1,5%+2,6%+0,1%</td></tr>
+      <tr class="dre-row-grand" style="background:var(--green-bg)!important;border-top:2px solid var(--green)!important;"><td><strong>(=) RESULTADO OPERACIONAL</strong></td><td class="text-right mono val-green" style="font-size:13px"><strong>19.431,57</strong></td><td class="text-right dre-pct" style="font-weight:700;color:var(--green);font-size:11px">86,1%</td></tr>
+    </tbody>
+  </table>
+  <div class="alert info" style="margin-top:8px;font-size:9px;padding:6px 10px;"><div class="alert-icon" style="font-size:11px">📝</div><div>DRE parcial — não inclui folha, aluguel, energia, depreciação.</div></div>
+</div>
+
+<div class="stamp" style="margin-top:14px;">📄 Bigg's 13 — Fechamento D-1 (21/05/2026) — Emissão: 22/05/2026</div>
+</div><!-- /tab-print -->
+
+
+<!-- ══════════════════════════════════════════ -->
+<!--       ABA 3 — CAIXA & AUDITORIA           -->
+<!-- ══════════════════════════════════════════ -->
+<div class="tab-content" id="tab-operacional">
+
+<div class="big-numbers cols-5">
+  <div class="bn-card"><div class="bn-stripe" style="background:var(--ragga)"></div><div class="bn-icon">🧾</div><div class="bn-label">Caixas</div><div class="bn-value mono">5</div><div class="bn-sub">2 diur. + 3 not.</div></div>
+  <div class="bn-card"><div class="bn-stripe" style="background:var(--red)"></div><div class="bn-icon">❌</div><div class="bn-label">Cancelamentos</div><div class="bn-value val-red mono">R$ 361,01</div><div class="bn-sub">23 ped. · 1,60%</div></div>
+  <div class="bn-card"><div class="bn-stripe" style="background:var(--amber)"></div><div class="bn-icon">💸</div><div class="bn-label">Retiradas</div><div class="bn-value val-amber mono">R$ 595,00</div><div class="bn-sub">8 itens · 2,64%</div></div>
+  <div class="bn-card"><div class="bn-stripe" style="background:var(--purple)"></div><div class="bn-icon">🎁</div><div class="bn-label">Brindes</div><div class="bn-value val-purple mono">R$ 296,86</div><div class="bn-sub">11 itens · 1,32%</div></div>
+  <div class="bn-card"><div class="bn-stripe" style="background:var(--green)"></div><div class="bn-icon">🩸</div><div class="bn-label">Sangrias</div><div class="bn-value val-green mono">Nenhuma</div><div class="bn-sub">—</div></div>
+</div>
+
+<div class="section-sep"><span class="sep-icon">🧾</span> CAIXAS OPERADOS</div>
+<div class="section">
+  <table>
+    <tr><th>Turno</th><th>Caixa</th><th>Operador(a)</th></tr>
+    <tr><td><span class="badge badge-amber">Diurno</span></td><td>Caixa 1</td><td>Rafaela Yasmin</td></tr>
+    <tr><td><span class="badge badge-amber">Diurno</span></td><td>Caixa 2</td><td>Thaís José</td></tr>
+    <tr><td><span class="badge badge-purple">Noturno</span></td><td>Caixa 3</td><td>Jocelene</td></tr>
+    <tr><td><span class="badge badge-purple">Noturno</span></td><td>Caixa 4</td><td>Gabrielle</td></tr>
+    <tr><td><span class="badge badge-purple">Noturno</span></td><td>Caixa 5</td><td>Jocelene (2º caixa)</td></tr>
+  </table>
+</div>
+
+<div class="section-sep"><span class="sep-icon">❌</span> CANCELAMENTOS</div>
+<div class="section">
+  <div class="grid-3" style="margin-bottom:12px;">
+    <div class="kpi"><div class="kpi-label">Total Cancel.</div><div class="kpi-value mono val-red">R$ 361,01</div><div class="kpi-sub">23 pedidos</div></div>
+    <div class="kpi"><div class="kpi-label">% s/ Faturamento</div><div class="kpi-value mono val-red">1,60%</div></div>
+    <div class="kpi"><div class="kpi-label">Ticket Médio</div><div class="kpi-value mono">R$ 15,70</div></div>
+  </div>
+  <table>
+    <tr><th>Canal</th><th class="text-right">Valor</th><th class="text-right">%</th></tr>
+    <tr><td>Delivery</td><td class="text-right mono">R$ 58,31</td><td class="text-right mono">16,2%</td></tr>
+    <tr><td>Salão</td><td class="text-right mono val-red">R$ 302,70</td><td class="text-right mono">83,8%</td></tr>
+  </table>
+  <hr class="divider">
+  <p style="font-size:10px;font-weight:700;color:var(--text-muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px">Motivos Salão — R$ 302,70</p>
+  <table>
+    <tr><th>Motivo</th><th class="text-right">Valor</th><th class="text-right">%</th></tr>
+    <tr><td>⚠️ Falta de Produtos</td><td class="text-right mono val-red">R$ 136,90</td><td class="text-right mono">45,2%</td></tr>
+    <tr><td>🔄 Troca de Produtos</td><td class="text-right mono">R$ 79,00</td><td class="text-right mono">26,1%</td></tr>
+    <tr><td>⚙️ Erro Operacional</td><td class="text-right mono">R$ 71,00</td><td class="text-right mono">23,5%</td></tr>
+    <tr><td>🚫 Desistência</td><td class="text-right mono">R$ 15,80</td><td class="text-right mono">5,2%</td></tr>
+  </table>
+  <div class="alert warn"><div class="alert-icon">⚠️</div><div><strong>Atenção:</strong> "Falta de Produtos" = 45,2% dos cancelamentos de salão.</div></div>
+</div>
+
+<div class="section-sep"><span class="sep-icon">💸</span> RETIRADAS DE CAIXA</div>
+<div class="section">
+  <div class="grid-2" style="margin-bottom:12px;">
+    <div class="kpi"><div class="kpi-label">Total Retiradas</div><div class="kpi-value mono val-red">R$ 595,00</div><div class="kpi-sub">8 itens</div></div>
+    <div class="kpi"><div class="kpi-label">% s/ Faturamento</div><div class="kpi-value mono">2,64%</div></div>
+  </div>
+  <table>
+    <tr><th>Classificação</th><th class="text-right">Valor</th><th>Detalhe</th></tr>
+    <tr><td><span class="badge badge-red">CMO (Free/Seg.)</span></td><td class="text-right mono val-red">R$ 575,00</td><td style="color:var(--text-muted);font-size:10px">Freelancers, segurança</td></tr>
+    <tr><td><span class="badge badge-amber">Custo Variável</span></td><td class="text-right mono val-amber">R$ 20,00</td><td style="color:var(--text-muted);font-size:10px">Estorno — Petit Gateau</td></tr>
+  </table>
+</div>
+
+<div class="section-sep"><span class="sep-icon">🎁</span> BRINDES</div>
+<div class="section">
+  <div class="grid-2" style="margin-bottom:12px;">
+    <div class="kpi"><div class="kpi-label">Total Brindes</div><div class="kpi-value mono val-purple">R$ 296,86</div><div class="kpi-sub">11 itens</div></div>
+    <div class="kpi"><div class="kpi-label">% s/ Faturamento</div><div class="kpi-value mono">1,32%</div></div>
+  </div>
+  <table>
+    <tr><th>Tipo</th><th class="text-right">Valor</th><th class="text-right">%</th></tr>
+    <tr><td>🎂 Aniversariante</td><td class="text-right mono val-purple">R$ 243,40</td><td class="text-right mono">82,0%</td></tr>
+    <tr><td>🎁 Presente</td><td class="text-right mono">R$ 3,50</td><td class="text-right mono">1,2%</td></tr>
+    <tr><td>📦 Taxa Extra</td><td class="text-right mono">R$ 49,96</td><td class="text-right mono">16,8%</td></tr>
+  </table>
+</div>
+
+</div><!-- /tab-operacional -->
+
+<div class="stamp">📄 Bigg's 13 — Fechamento D-1 (21/05/2026) — Emissão: 22/05/2026</div>
+</div>
+
+<script>
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tabId).classList.add('active');
+  event.currentTarget.classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+function toggleDreGroup(groupClass) {
+  const rows = document.querySelectorAll('.dre-detail.' + groupClass);
+  if (!rows.length) return;
+  const isHidden = rows[0].style.display === 'none';
+  rows.forEach(r => r.style.display = isHidden ? 'table-row' : 'none');
+  const headers = document.querySelectorAll('.dre-row-total[onclick*="' + groupClass + '"] td:first-child strong');
+  headers.forEach(h => {
+    if (isHidden) h.textContent = h.textContent.replace('▸', '▾');
+    else h.textContent = h.textContent.replace('▾', '▸');
+  });
+}
+</script>
+</body>
+</html>
