@@ -90,6 +90,89 @@
   .dre-pct{font-size:9px;color:var(--text-muted);font-weight:500}
 
   @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+  /* ═══ MOBILE RESPONSIVE ═══ */
+  @media (max-width: 768px) {
+    body{padding:10px}
+    .container{max-width:100%}
+    .header-banner{padding:16px 18px;border-radius:12px;flex-direction:row}
+    .header-text h1{font-size:16px}
+    .header-text .subtitle{font-size:10px}
+    .date-badge{padding:8px 12px}
+    .date-badge .day{font-size:22px}
+    .date-badge .month{font-size:9px}
+
+    /* Tabs */
+    .tab-bar{flex-direction:column;gap:3px;padding:4px}
+    .tab-btn{padding:10px 14px;font-size:11px;justify-content:flex-start}
+    .tab-btn .tab-icon{font-size:14px}
+
+    /* Big numbers - 2 cols on mobile */
+    .big-numbers{grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px}
+    .big-numbers.cols-3{grid-template-columns:repeat(3,1fr);gap:8px}
+    .big-numbers.cols-5{grid-template-columns:repeat(3,1fr);gap:8px}
+    .bn-card{padding:12px 14px;border-radius:10px}
+    .bn-card .bn-icon{font-size:14px;margin-bottom:3px}
+    .bn-card .bn-label{font-size:8px;margin-bottom:3px}
+    .bn-card .bn-value{font-size:15px}
+    .bn-card .bn-sub{font-size:8px;margin-top:3px}
+
+    /* Sections */
+    .section{padding:14px;margin-bottom:10px;border-radius:10px}
+    .section-title{font-size:12px;margin-bottom:12px;gap:6px}
+    .section-title .icon{width:22px;height:22px;font-size:11px}
+    .section-sep{font-size:10px;margin:16px 0 8px;padding:6px 0}
+    .section-sep .sep-icon{font-size:12px}
+
+    /* Tables */
+    th{font-size:7.5px;padding:5px 6px;letter-spacing:.4px}
+    td{font-size:11px;padding:5px 6px}
+    table{font-size:11px}
+
+    /* KPIs */
+    .grid-2{grid-template-columns:1fr 1fr;gap:8px}
+    .grid-3{grid-template-columns:1fr 1fr 1fr;gap:8px}
+    .grid-4{grid-template-columns:1fr 1fr;gap:8px}
+    .kpi{padding:10px 12px;border-radius:8px}
+    .kpi .kpi-label{font-size:8px;margin-bottom:3px}
+    .kpi .kpi-value{font-size:14px}
+    .kpi .kpi-sub{font-size:8px}
+
+    /* Summary rows */
+    .summary-row{padding:10px 12px;border-radius:8px;margin-top:10px;flex-wrap:wrap;gap:4px}
+    .summary-row .label{font-size:10px}
+    .summary-row .value{font-size:15px}
+
+    /* Alerts */
+    .alert{padding:8px 10px;font-size:10px;margin-top:8px;border-radius:7px}
+    .alert .alert-icon{font-size:12px}
+    .divider{margin:10px 0}
+
+    /* DRE */
+    .dre-table th{font-size:7px;padding:4px 6px}
+    .dre-table td{font-size:10px;padding:3px 6px}
+    .dre-row-grand td{font-size:11px}
+    .dre-pct{font-size:8px}
+
+    /* Badges */
+    .badge{font-size:8px;padding:2px 6px}
+
+    /* Stamp */
+    .stamp{font-size:9px;margin-top:16px;padding-top:10px}
+  }
+
+  @media (max-width: 400px) {
+    .big-numbers{grid-template-columns:1fr 1fr;gap:6px}
+    .big-numbers.cols-3{grid-template-columns:1fr 1fr 1fr;gap:6px}
+    .big-numbers.cols-5{grid-template-columns:repeat(3,1fr);gap:6px}
+    .bn-card .bn-value{font-size:13px}
+    .bn-card .bn-label{font-size:7px}
+    .grid-3{grid-template-columns:1fr 1fr;gap:6px}
+    .kpi .kpi-value{font-size:13px}
+    th{font-size:7px;padding:4px 5px}
+    td{font-size:10px;padding:4px 5px}
+    .header-text h1{font-size:14px}
+  }
 </style>
 </head>
 <body>
